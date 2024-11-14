@@ -254,11 +254,11 @@ $o-icon-icons: (
     line-height: 1em;
 
     @if $multicolor {
-      background-image: url('../../assets/icons/icons.svg#icon-#{$name}-view');
+      background-image: url('./icons/icons.svg#icon-#{$name}-view');
       background-repeat: no-repeat;
       background-size: contain;
     } @else {
-      mask: url('../../assets/icons/icons.svg#icon-#{$name}-view');
+      mask: url('./icons/icons.svg#icon-#{$name}-view');
       mask-repeat: no-repeat;
       mask-size: contain;
       background-color: var(--o-icon-color, currentcolor);

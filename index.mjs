@@ -1,5 +1,4 @@
 import fs from 'fs/promises';
-// import fastGlob from 'fast-glob';
 import path from 'path';
 import svgo from 'svgo';
 import chalk from 'chalk';
@@ -22,8 +21,8 @@ const icons = (api) => {
   const iconsFileDestinationFile = iconsDestinationFolder + '/icons.svg';
 
   const iconsScssSettingsFileDestinationFolder = api.resolve('dist');
-  const iconsScssSettingsFileDestinationFile =
-    iconsScssSettingsFileDestinationFolder + '/_icon-settings.scss';
+  const iconsScssSettingsFileDestinationFile = iconsScssSettingsFileDestinationFolder + '/_icon-settings.scss';
+  const iconsScssStyleFileDestinationFile = iconsScssSettingsFileDestinationFolder + '/_icons.scss';
 
   function optimizeSVG(svgContent, idPrefix, colorfulIcons) {
     const configMono = [
@@ -234,6 +233,52 @@ $o-icon-icons: (
     }
   }
 
+  async function generateScssStylesFile() {
+    const scssFileContent =
+      `@use 'sass:math';
+@use './icon-settings' as *;
+
+/* This file is auto generated. Do not edit directly. */
+
+.o-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  font-size: var(--o-icon-size, 1em);
+  color: var(--o-icon-color, currentcolor);
+
+  &--inline {
+    display: inline-flex;
+  }
+
+  @each $icon, $width-ratio in $o-icon-icons {
+    &--#{$icon} {
+      width: $width-ratio * 1em;
+    }
+  }
+}
+
+.o-icon__icon {
+  display: block;
+  width: 100%;
+  height: 1em;
+
+  &:not(&--color) {
+    fill: currentcolor;
+    stroke: currentcolor;
+    stroke-width: 0;
+  }
+}`.trim() + '\n';
+
+    try {
+      await fs.writeFile(iconsScssStyleFileDestinationFile, scssFileContent, 'utf-8');
+      printLog(`Generated SCSS styles file: ${chalk.italic.underline(iconsScssStyleFileDestinationFile)}`);
+    } catch (error) {
+      throw new Error(`Error generating ${iconsScssStyleFileDestinationFile}: ${error.message}`);
+    }
+  }
+
   async function generateIconsJsonFile(svgIconsData) {
     try {
       const jsonContent = JSON.stringify(svgIconsData, null, 2).trim() + '\n';
@@ -423,6 +468,7 @@ $o-icon-icons: (
     await Promise.all([
       generateIconsFile(svgIconsDataMono, svgIconsDataColor),
       generateScssSettingsFile(allIconsData),
+      generateScssStylesFile(),
       generateIconsJsonFile(allIconsData),
       generateIconsHTMLPreview(svgIconsDataMono, svgIconsDataColor),
     ]);
@@ -431,4 +477,5 @@ $o-icon-icons: (
   }
 }
 
+await fs.rm(api.resolve('dist/'), { recursive: true, force: true });
 icons(api)();

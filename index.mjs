@@ -525,4 +525,5 @@ $o-icon-icons: (
   }
 }
 
+await fs.rm(api.resolve('dist/'), { recursive: true, force: true });
 icons(api)();

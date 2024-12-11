@@ -1,4 +1,4 @@
-# Generate Icons bundle SVG file - SCSS only approach
+# Generate Icons bundle SVG file - CSS/SCSS only approach
 
 This project generates a bundled SVG icon set from individual SVG icon files and allow to use them in your projects with just a CSS classes (similar to the icon fonts).
 

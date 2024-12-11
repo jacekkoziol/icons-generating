@@ -1,5 +1,4 @@
 import fs from 'fs/promises';
-// import fastGlob from 'fast-glob';
 import path from 'path';
 import svgo from 'svgo';
 import chalk from 'chalk';

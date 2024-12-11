@@ -17,12 +17,12 @@ const icons = (api) => {
   const svgSourceFilesDirectoryColor = svgSourceFilesDirectory + '/color/';
 
   const iconsDestinationFolder = api.resolve('dist/icons');
-  const iconsJsonFileDestinationFile = iconsDestinationFolder + '/icons.json';
-  const iconsFileDestinationFile = iconsDestinationFolder + '/icons.svg';
+  const iconsJsonDestinationFile = iconsDestinationFolder + '/icons.json';
+  const iconsSVGBundleDestinationFile = iconsDestinationFolder + '/icons.svg';
 
-  const iconsScssSettingsFileDestinationFolder = api.resolve('dist');
-  const iconsScssMixinsFileDestinationFile = iconsScssSettingsFileDestinationFolder + '/_icons-mixin.scss';
-  const iconsScssStyleFileDestinationFile = iconsScssSettingsFileDestinationFolder + '/_icons.scss';
+  const iconsScssDestinationFolder = api.resolve('dist');
+  const iconsScssMixinsDestinationFile = iconsScssDestinationFolder + '/_icons-mixin.scss';
+  const iconsScssStyleDestinationFile = iconsScssDestinationFolder + '/_icons.scss';
 
   function optimizeSVG(svgContent, idPrefix, colorfulIcons) {
     const configMono = [
@@ -196,10 +196,10 @@ const icons = (api) => {
 </svg>`.trim() + '\n';
 
     try {
-      await fs.writeFile(iconsFileDestinationFile, iconsSVG, 'utf-8');
-      printLog(`Generated SVG icons file: ${chalk.italic.underline(iconsFileDestinationFile)}`);
+      await fs.writeFile(iconsSVGBundleDestinationFile, iconsSVG, 'utf-8');
+      printLog(`Generated SVG icons file: ${chalk.italic.underline(iconsSVGBundleDestinationFile)}`);
     } catch (error) {
-      throw new Error(`Error generating ${iconsFileDestinationFile}: ${error.message}`);
+      throw new Error(`Error generating ${iconsSVGBundleDestinationFile}: ${error.message}`);
     }
   }
 
@@ -263,10 +263,10 @@ ${scssIndividualIconsMixins}
   `.trim() + '\n';
 
     try {
-      await fs.writeFile(iconsScssMixinsFileDestinationFile, scssMixinsFileContent, 'utf-8');
-      printLog(`Generated SCSS mixins file: ${chalk.italic.underline(iconsScssMixinsFileDestinationFile)}`);
+      await fs.writeFile(iconsScssMixinsDestinationFile, scssMixinsFileContent, 'utf-8');
+      printLog(`Generated SCSS mixins file: ${chalk.italic.underline(iconsScssMixinsDestinationFile)}`);
     } catch (error) {
-      throw new Error(`Error generating ${iconsScssMixinsFileDestinationFile}: ${error.message}`);
+      throw new Error(`Error generating ${iconsScssMixinsDestinationFile}: ${error.message}`);
     }
   }
 
@@ -299,10 +299,10 @@ ${scssIndividualIconsClasses}
 `.trim() + '\n';
 
     try {
-      await fs.writeFile(iconsScssStyleFileDestinationFile, scssSettingsFileContent, 'utf-8');
-      printLog(`Generated SCSS styles file: ${chalk.italic.underline(iconsScssStyleFileDestinationFile)}`);
+      await fs.writeFile(iconsScssStyleDestinationFile, scssSettingsFileContent, 'utf-8');
+      printLog(`Generated SCSS styles file: ${chalk.italic.underline(iconsScssStyleDestinationFile)}`);
     } catch (error) {
-      throw new Error(`Error generating ${iconsScssStyleFileDestinationFile}: ${error.message}`);
+      throw new Error(`Error generating ${iconsScssStyleDestinationFile}: ${error.message}`);
     }
   }
 
@@ -312,10 +312,10 @@ ${scssIndividualIconsClasses}
   async function generateIconsJsonFile(svgIconsData) {
     try {
       const jsonContent = JSON.stringify(svgIconsData, null, 2).trim() + '\n';
-      await fs.writeFile(iconsJsonFileDestinationFile, jsonContent, 'utf-8');
-      printLog(`Generated JSON icons data file: ${chalk.italic.underline(iconsJsonFileDestinationFile)}`);
+      await fs.writeFile(iconsJsonDestinationFile, jsonContent, 'utf-8');
+      printLog(`Generated JSON icons data file: ${chalk.italic.underline(iconsJsonDestinationFile)}`);
     } catch (error) {
-      throw new Error(`Error generating ${iconsJsonFileDestinationFile}: ${error.message}`);
+      throw new Error(`Error generating ${iconsJsonDestinationFile}: ${error.message}`);
     }
   }
 

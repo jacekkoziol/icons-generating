@@ -1,0 +1,15 @@
+# See https://help.github.com/articles/ignoring-files for more about ignoring files.
+
+/dist
+/demo
+
+# node
+/node_modules
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+.idea/
+
+# System Files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,18 @@
+@use './dist/icons-mixin' as *;
+@use  './dist/icons';
+
+.custom-monochromatic-icon {
+  @include icon;
+
+  &::before {
+    @include mono-icon-chisel-icon;
+  }
+}
+
+.custom-multicolor-icon {
+  @include icon(true);
+
+  &::before {
+    @include color-icon-chisel-icon;
+  }
+}

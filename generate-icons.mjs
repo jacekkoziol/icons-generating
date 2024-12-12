@@ -24,6 +24,13 @@ const icons = (api) => {
   const iconsScssMixinsDestinationFile = iconsScssDestinationFolder + '/_icons-mixin.scss';
   const iconsScssStyleDestinationFile = iconsScssDestinationFolder + '/_icons.scss';
 
+  const iconMonoIdPrefix = 'mono-icon';
+  const iconColorIdPrefix = 'color-icon';
+
+  const cssVarNameIconSize = '--o-icon-size';
+  const cssVarNameIconColor = '--o-icon-color';
+  const cssVarNameIconUrl = '--o-icon-svg-url';
+
   function optimizeSVG(svgContent, idPrefix, colorfulIcons) {
     const configMono = [
       {
@@ -68,7 +75,8 @@ const icons = (api) => {
 
   async function parseSVGFileData(iconSourceFilePath, iconColorful) {
     const iconName = path.basename(iconSourceFilePath, '.svg').replace(/[_|\s]/gm, '-');
-    const iconId = iconColorful ? `icon-color-${iconName}` : `icon-${iconName}`;
+    // const iconId = iconColorful ? `icon-color-${iconName}` : `icon-${iconName}`;
+    const iconId = iconColorful ? `${iconColorIdPrefix}-${iconName}` : `${iconMonoIdPrefix}-${iconName}`;
     const iconViewId = `${iconId}-view`;
     const svgContent = await fs.readFile(iconSourceFilePath, 'utf-8');
     const optimizedSvgContent = optimizeSVG(svgContent, iconId, iconColorful);
@@ -211,30 +219,18 @@ const icons = (api) => {
       .map((data) => {
         let mixinContent;
 
-        if (data.iconColorful) {
-          mixinContent = `
-  background-image: url('./icons/icons.svg#${data.iconViewId}');
-  background-repeat: no-repeat;
-  background-size: contain;
-    `;
-        } else {
-          mixinContent = `
-  mask: url('./icons/icons.svg#${data.iconViewId}');
-  mask-repeat: no-repeat;
-  mask-size: contain;
-  background-color: var(--o-icon-color, currentcolor);
-    `;
-        }
+        mixinContent = `${cssVarNameIconUrl}: url('./icons/icons.svg#${data.iconViewId}');`;
 
         if (data.svgRectangle) {
-          mixinContent += `width: math.div(${data.svgWidth}, ${data.svgHeight}) * 1em;`
+          mixinContent += `
+  width: math.div(${data.svgWidth}, ${data.svgHeight}) * 1em;`
         }
 
         return `
 @mixin ${data.iconId} {
   ${mixinContent.trim()}
 }
-  `;
+`;
       })
       .join('')
       .trim();
@@ -242,13 +238,21 @@ const icons = (api) => {
     const scssMixinsFileContent =
       `@use 'sass:map';
 @use 'sass:math';
+@use "sass:string";
 
 /* This file is auto generated. Do not edit directly. */
 
-@mixin icon() {
+@mixin icon($multicolor: false) {
+  display: flex;
+  align-items: center;
+  justify-items: center;
   height: 1em;
   line-height: 1em;
-  font-size: var(--o-icon-size, 1em);
+  font-size: var(${cssVarNameIconSize}, 1em);
+
+  &--inline {
+    display: inline-flex;
+  }
 
   &::before {
     content: '';
@@ -256,6 +260,17 @@ const icons = (api) => {
     line-height: 1em;
     height: 1em;
     width: 1em;
+
+    @if ($multicolor) {
+      background-image: var(${cssVarNameIconUrl});
+      background-repeat: no-repeat;
+      background-size: contain;
+    } @else {
+      mask: var(${cssVarNameIconUrl});
+      mask-repeat: no-repeat;
+      mask-size: contain;
+      background-color: var(${cssVarNameIconColor}, currentcolor);
+    }
   }
 }
 
@@ -292,7 +307,37 @@ ${scssIndividualIconsMixins}
 /* This file is auto generated. Do not edit directly. */
 
 .o-icon {
-  @include icon();
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  height: 1em;
+  line-height: 1em;
+  font-size: var(${cssVarNameIconSize}, 1em);
+
+  &--inline {
+    display: inline-flex;
+  }
+
+  &::before {
+    content: '';
+    display: block;
+    line-height: 1em;
+    height: 1em;
+    width: 1em;
+  }
+
+  &[class*="${iconMonoIdPrefix}"]::before {
+    mask: var(${cssVarNameIconUrl});
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    background-color: var(${cssVarNameIconColor}, currentcolor);
+  }
+
+  &[class*="${iconColorIdPrefix}"]::before {
+    background-image: var(${cssVarNameIconUrl});
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
 }
 
 ${scssIndividualIconsClasses}
@@ -430,7 +475,7 @@ ${scssIndividualIconsClasses}
       height: 1em;
       line-height: 1em;;
       width: 1em;
-      font-size: var(--o-icon-size, 1em);
+      font-size: var(${cssVarNameIconSize}, 1em);
     }
 
     .o-icon--color {
@@ -441,7 +486,7 @@ ${scssIndividualIconsClasses}
     .o-icon--mono {
       mask-repeat: no-repeat;
       mask-size: contain;
-      background-color: var(--o-icon-color, currentcolor);
+      background-color: var(${cssVarNameIconColor}, currentcolor);
     }
 
     ${cssClasses}

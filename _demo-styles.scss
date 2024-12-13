@@ -16,3 +16,19 @@
     @include color-icon-chisel-icon;
   }
 }
+
+.custom-monochromatic-icon-wide {
+  @include icon;
+
+  &::before {
+    @include mono-icon-chisel-logo;
+  }
+}
+
+.custom-multicolor-icon-wide {
+  @include icon(true);
+
+  &::before {
+    @include color-icon-chisel-logo;
+  }
+}

@@ -141,6 +141,16 @@ async function generateHTMLPreviewDemo() {
           <i class="custom-multicolor-icon"></i>
         </div>
       </div>
+      <div class="element">
+        <div class="element__icon"></div>
+          <i class="custom-monochromatic-icon-wide"></i>
+        </div>
+      </div>
+      <div class="element">
+        <div class="element__icon"></div>
+          <i class="custom-multicolor-icon-wide"></i>
+        </div>
+      </div>
     </section>
   </body>
 </html>

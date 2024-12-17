@@ -18,7 +18,9 @@ const icons = (api) => {
 
   const iconsDestinationFolder = api.resolve('dist/icons');
   const iconsJsonDestinationFile = iconsDestinationFolder + '/icons.json';
-  const iconsSVGBundleDestinationFile = iconsDestinationFolder + '/icons.svg';
+
+  const iconsSVGBundleFileName = `icons.svg`;
+  const iconsSVGBundleDestinationFile = iconsDestinationFolder + '/' + iconsSVGBundleFileName;
 
   const iconsScssDestinationFolder = api.resolve('dist');
   const iconsScssMixinsDestinationFile = iconsScssDestinationFolder + '/_icons-mixin.scss';
@@ -215,11 +217,12 @@ const icons = (api) => {
    * @param {SvgItemData[]} svgIconsData
    */
   async function generateScssMixinsFile(svgIconsData) {
+    const qp = `v=${Date.now()}`;
     const scssIndividualIconsMixins = svgIconsData
       .map((data) => {
         let mixinContent;
 
-        mixinContent = `${cssVarNameIconUrl}: url('./icons/icons.svg#${data.iconViewId}');`;
+        mixinContent = `${cssVarNameIconUrl}: url('./icons/${iconsSVGBundleFileName}?${qp}#${data.iconViewId}');`;
 
         if (data.svgRectangle) {
           mixinContent += `

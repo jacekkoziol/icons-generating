@@ -76,8 +76,7 @@ const icons = (api) => {
   }
 
   async function parseSVGFileData(iconSourceFilePath, iconColorful) {
-    const iconName = path.basename(iconSourceFilePath, '.svg').replace(/[_|\s]/gm, '-');
-    // const iconId = iconColorful ? `icon-color-${iconName}` : `icon-${iconName}`;
+    const iconName = path.basename(iconSourceFilePath, '.svg').replace(/[_|\s]/gm, '-').toLowerCase();;
     const iconId = iconColorful ? `${iconColorIdPrefix}-${iconName}` : `${iconMonoIdPrefix}-${iconName}`;
     const iconViewId = `${iconId}-view`;
     const svgContent = await fs.readFile(iconSourceFilePath, 'utf-8');
@@ -94,8 +93,8 @@ const icons = (api) => {
       throw Error(`SVG viewBox not found in file ${iconSourceFilePath}.`);
     }
 
-    const svgWidth = parseInt(svgViewBox.split(' ')[2], 10);
-    const svgHeight = parseInt(svgViewBox.split(' ')[3], 10);
+    const svgWidth = parseFloat(svgViewBox.split(' ')[2], 10);
+    const svgHeight = parseFloat(svgViewBox.split(' ')[3], 10);
     const svgRectangle = svgWidth !== svgHeight;
     const svgIconDataFull = optimizedSvgContent.replace(/<svg[^>]*>|<\/svg>/gi, '').trim();
     const svgIconDataNoDefs = svgIconDataFull.replace(defsRegex, '');
@@ -252,6 +251,7 @@ const icons = (api) => {
   height: 1em;
   line-height: 1em;
   font-size: var(${cssVarNameIconSize}, 1em);
+  overflow: hidden; /* Safari fix */
 
   &--inline {
     display: inline-flex;
@@ -267,11 +267,13 @@ const icons = (api) => {
     @if ($multicolor) {
       background-image: var(${cssVarNameIconUrl});
       background-repeat: no-repeat;
-      background-size: contain;
+      background-size: cover;
+      background-position: center;
     } @else {
       mask: var(${cssVarNameIconUrl});
       mask-repeat: no-repeat;
-      mask-size: contain;
+      mask-size: cover;
+      mask-position: center;
       background-color: var(${cssVarNameIconColor}, currentcolor);
     }
   }
@@ -316,6 +318,7 @@ ${scssIndividualIconsMixins}
   height: 1em;
   line-height: 1em;
   font-size: var(${cssVarNameIconSize}, 1em);
+  overflow: hidden; /* Safari fix */
 
   &--inline {
     display: inline-flex;
@@ -332,14 +335,16 @@ ${scssIndividualIconsMixins}
   &[class*="${iconMonoIdPrefix}"]::before {
     mask: var(${cssVarNameIconUrl});
     mask-repeat: no-repeat;
-    mask-size: contain;
+    mask-size: cover;
+    mask-position: center;
     background-color: var(${cssVarNameIconColor}, currentcolor);
   }
 
   &[class*="${iconColorIdPrefix}"]::before {
     background-image: var(${cssVarNameIconUrl});
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
+    background-position: center;
   }
 }
 

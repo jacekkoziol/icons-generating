@@ -251,7 +251,6 @@ const icons = (api) => {
   height: 1em;
   line-height: 1em;
   font-size: var(${cssVarNameIconSize}, 1em);
-  overflow: hidden; /* Safari fix */
 
   &--inline {
     display: inline-flex;
@@ -270,7 +269,7 @@ const icons = (api) => {
       background-size: cover;
       background-position: center;
     } @else {
-      mask: var(${cssVarNameIconUrl});
+      mask-image: var(${cssVarNameIconUrl});
       mask-repeat: no-repeat;
       mask-size: cover;
       mask-position: center;
@@ -318,7 +317,6 @@ ${scssIndividualIconsMixins}
   height: 1em;
   line-height: 1em;
   font-size: var(${cssVarNameIconSize}, 1em);
-  overflow: hidden; /* Safari fix */
 
   &--inline {
     display: inline-flex;
@@ -333,7 +331,7 @@ ${scssIndividualIconsMixins}
   }
 
   &[class*="${iconMonoIdPrefix}"]::before {
-    mask: var(${cssVarNameIconUrl});
+    mask-image: var(${cssVarNameIconUrl});
     mask-repeat: no-repeat;
     mask-size: cover;
     mask-position: center;

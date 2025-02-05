@@ -98,9 +98,10 @@ const icons = (api) => {
     const svgRectangle = svgWidth !== svgHeight;
     const svgIconDataFull = optimizedSvgContent.replace(/<svg[^>]*>|<\/svg>/gi, '').trim();
     const svgIconDataNoDefs = svgIconDataFull.replace(defsRegex, '');
+    const iconSourceFilePathRel = iconSourceFilePath.replace(__dirname, '');
 
     return {
-      iconSourceFilePath,
+      iconSourceFilePathRel,
       iconName,
       iconColorful,
       iconId,
@@ -557,7 +558,7 @@ icons(api)();
 /**
  * @typedef SvgItemData
  * @type {object}
- * @property {string} iconSourceFilePath - path to the source SVG file
+ * @property {string} iconSourceFilePathRel - path to the source SVG file relative to the current script
  * @property {string} iconName - the name of the icon
  * @property {boolean} iconColorful - whether the icon is colorful or not
  * @property {string} iconId - the ID of the icon

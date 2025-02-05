@@ -88,9 +88,10 @@ const icons = (api) => {
     const svgRectangle = svgWidth !== svgHeight;
     const svgIconDataFull = optimizedSvgContent.replace(/<svg[^>]*>|<\/svg>/gi, '').trim();
     const svgIconDataNoDefs = svgIconDataFull.replace(defsRegex, '');
+    const iconSourceFilePathRel = iconSourceFilePath.replace(__dirname, '');
 
     return {
-      iconSourceFilePath,
+      iconSourceFilePathRel,
       iconName,
       iconColorful,
       iconId,

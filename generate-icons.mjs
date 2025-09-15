@@ -185,11 +185,15 @@ const icons = (api) => {
     const {contentData: contentDataMono, viewBoxY} = await generateFileContentDataOfSvgIcons(svgIconsDataMono);
     const {contentData: contentDataColor} = await generateFileContentDataOfSvgIcons(svgIconsDataColor, viewBoxY);
 
+    const totalHeight = contentDataMono.viewBoxTotalHeight + contentDataColor.viewBoxTotalHeight;
+    const totalWidth = Math.max(contentDataMono.viewBoxMaxWidth, contentDataColor.viewBoxMaxWidth);
+    const viewBox = `0 0 ${totalWidth} ${totalHeight}`;
+
     const iconsSVG =
       `
 <!-- This file is auto generated. Do not edit directly. -->
 
-<svg version="1.1" viewBox="0 0 ${contentDataColor.viewBoxMaxWidth} ${contentDataColor.viewBoxTotalHeight}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg version="1.1" viewBox="${viewBox}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <defs>
     ${contentDataColor.defs.trim()}
   </defs>

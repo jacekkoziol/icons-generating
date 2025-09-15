@@ -1,6 +1,5 @@
 import fs from 'fs/promises';
 import path from 'path';
-// import svgo from 'svgo';
 import { optimize } from 'svgo';
 import chalk from 'chalk';
 

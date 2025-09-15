@@ -1,6 +1,7 @@
 import fs from 'fs/promises';
 import path from 'path';
-import svgo from 'svgo';
+// import svgo from 'svgo';
+import { optimize } from 'svgo';
 import chalk from 'chalk';
 
 // Get the directory of the current module
@@ -46,7 +47,7 @@ const icons = (api) => {
     const configColor = [];
     const config = colorfulIcons ? configColor : configMono;
 
-    const result = svgo.optimize(svgContent, {
+    const result = optimize(svgContent, {
       removeViewBox: false,
       removeDimensions: false,
       plugins: [

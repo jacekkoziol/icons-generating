@@ -100,6 +100,7 @@ async function generateHTMLPreviewDemo() {
         font-size: 3.6rem;
         color: #333;
         transition: 0.2s;
+        overflow: hidden;
       }
 
       .element:hover {
@@ -130,7 +131,7 @@ async function generateHTMLPreviewDemo() {
     </section>
 
     <section>
-      <h2>Custom class Icons with mixin usage</h2>
+      <h2>Custom class Icons with mixin usage - mixin: icon</h2>
       <div class="element">
         <div class="element__icon">
           <i class="custom-monochromatic-icon"></i>
@@ -149,6 +150,52 @@ async function generateHTMLPreviewDemo() {
       <div class="element">
         <div class="element__icon">
           <i class="custom-multicolor-icon-wide"></i>
+        </div>
+      </div>
+      <div class="element">
+        <div class="element__icon">
+          <i class="custom-monochromatic-icon-wide-square"></i>
+        </div>
+      </div>
+      <div class="element">
+        <div class="element__icon">
+          <i class="custom-multicolor-icon-wide-square"></i>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Custom class Icons with mixin usage - mixin: icon-element</h2>
+      <div class="element">
+        <div class="element__icon">
+          <i class="element-with-monochromatic-icon"></i>
+        </div>
+      </div>
+      <div class="element">
+        <div class="element__icon">
+          <i class="element-with-multicolor-icon"></i>
+        </div>
+      </div>
+      <div class="element">
+        <div class="element__icon">
+          <i class="element-with-monochromatic-icon-wide"></i>
+        </div>
+      </div>
+      <div class="element">
+        <div class="element__icon">
+          <i class="element-with-multicolor-icon-wide"></i>
+        </div>
+      </div>
+
+      <!-- -->
+      <div class="element">
+        <div class="element__icon">
+          <i class="element-with-monochromatic-icon-wide-square"></i>
+        </div>
+      </div>
+      <div class="element">
+        <div class="element__icon">
+          <i class="element-with-multicolor-icon-wide-square"></i>
         </div>
       </div>
     </section>

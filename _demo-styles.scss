@@ -32,3 +32,75 @@
     @include color-icon-chisel-logo;
   }
 }
+
+.custom-monochromatic-icon-wide-square {
+  @include icon(false, true);
+
+  &::before {
+    @include mono-icon-chisel-logo;
+  }
+}
+
+.custom-multicolor-icon-wide-square {
+  @include icon(true, true);
+
+  &::before {
+    @include color-icon-chisel-logo;
+  }
+}
+
+/* Mixins only for before element */
+.element-with-monochromatic-icon {
+  display: block;
+  // border: 1px solid #f00;
+
+  &::before {
+    @include icon-element;
+    @include mono-icon-chisel-icon;
+  }
+}
+
+.element-with-multicolor-icon {
+  display: block;
+
+  &::before {
+    @include icon-element(true);
+    @include color-icon-chisel-icon;
+  }
+}
+
+.element-with-monochromatic-icon-wide {
+  display: block;
+
+  &::before {
+    @include icon-element;
+    @include mono-icon-chisel-logo;
+  }
+}
+
+.element-with-multicolor-icon-wide {
+  display: block;
+
+  &::before {
+    @include icon-element(true);
+    @include color-icon-chisel-logo;
+  }
+}
+
+.element-with-monochromatic-icon-wide-square {
+  display: block;
+
+  &::before {
+    @include icon-element(false, true);
+    @include mono-icon-chisel-logo;
+  }
+}
+
+.element-with-multicolor-icon-wide-square {
+  display: block;
+
+  &::before {
+    @include icon-element(true, true);
+    @include color-icon-chisel-logo;
+  }
+}

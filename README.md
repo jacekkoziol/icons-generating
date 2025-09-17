@@ -46,6 +46,19 @@ When everything is set and the files are created, you can use the bundled SVG ic
 }
 
 .my-class-icon::before {
-  @include icon-close-line();
+  @include icon-close-line;
+}
+```
+or
+
+```scss
+.my-class-icon {
+  display: flex;
+  color: red;
+}
+
+.my-class-icon::before {
+  @include icon-element;
+  @include icon-close-line;
 }
 ```

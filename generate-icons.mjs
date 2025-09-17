@@ -259,33 +259,20 @@ const icons = (api) => {
 
 /* This file is auto generated. Do not edit directly. */
 
-@mixin icon($multicolor: false) {
+/** Mixin that creates a set of classes for SVG icon
+ * @param {boolean} $multicolor - whether the icon is multicolor (true) or monochromatic (false)
+ * @param {boolean} $forceSquare - whether to force square aspect ratio (true) or not (false)
+ */
+@mixin icon($multicolor: false, $forceSquare: false) {
   display: flex;
   align-items: center;
   justify-items: center;
   height: 1em;
   line-height: 1em;
-  font-size: var(${cssVarNameIconSize}, 1em);
+  font-size: var(--o-icon-size, 1em);
 
   &::before {
-    content: '';
-    display: block;
-    line-height: 1em;
-    height: 1em;
-    width: 1em;
-
-    @if $multicolor {
-      background-image: var(${cssVarNameIconUrl});
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-    } @else {
-      mask-image: var(${cssVarNameIconUrl});
-      mask-repeat: no-repeat;
-      mask-size: cover;
-      mask-position: center;
-      background-color: var(${cssVarNameIconColor}, currentcolor);
-    }
+    @include icon-element($multicolor, $forceSquare);
   }
 
   &--inline {
@@ -298,6 +285,34 @@ const icons = (api) => {
       width: 1em !important;
       height: var(${cssVarNameIconHeight}, 1em);
     }
+  }
+}
+
+/** Container for SVG icon - usually ::before pseudo element */
+@mixin icon-element($multicolor: false, $forceSquare: false) {
+  content: '';
+  display: block;
+  line-height: 1em;
+
+  @if $forceSquare {
+    width: 1em !important;
+    height: var(${cssVarNameIconHeight}, 1em);
+  } @else {
+    height: 1em;
+    width: 1em;
+  }
+
+  @if $multicolor {
+    background-image: var(--o-icon-svg-url);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  } @else {
+    mask-image: var(--o-icon-svg-url);
+    mask-repeat: no-repeat;
+    mask-size: cover;
+    mask-position: center;
+    background-color: var(--o-icon-color, currentcolor);
   }
 }
 

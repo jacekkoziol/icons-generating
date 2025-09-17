@@ -132,23 +132,57 @@ async function generateHTMLPreviewDemo() {
     <section>
       <h2>Custom class Icons with mixin usage</h2>
       <div class="element">
-        <div class="element__icon"></div>
+        <div class="element__icon">
           <i class="custom-monochromatic-icon"></i>
         </div>
       </div>
       <div class="element">
-        <div class="element__icon"></div>
+        <div class="element__icon">
           <i class="custom-multicolor-icon"></i>
         </div>
       </div>
       <div class="element">
-        <div class="element__icon"></div>
+        <div class="element__icon">
           <i class="custom-monochromatic-icon-wide"></i>
         </div>
       </div>
       <div class="element">
-        <div class="element__icon"></div>
+        <div class="element__icon">
           <i class="custom-multicolor-icon-wide"></i>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Icons with modifier <code>--square</code> (Force square dimensions)</h2>
+      <div class="element">
+        <div class="element__icon">
+          <i class="o-icon o-icon--square o-icon--mono-icon-chisel-logo"></i>
+        </div>
+        <code class="element__usage">
+          ${escapeHtml(`<i class="o-icon o-icon--square o-icon--mono-icon-chisel-logo"></i>`)}
+        </code>
+      </div>
+      <div class="element">
+        <div class="element__icon">
+          <i class="o-icon o-icon--square o-icon--color-icon-chisel-logo"></i>
+        </div>
+        <code class="element__usage">
+          ${escapeHtml(`<i class="o-icon o-icon--square o-icon--color-icon-chisel-logo"></i>`)}
+        </code>
+      </div>
+    </section>
+
+    <section>
+      <h2>Custom class Icons with mixin usage and modifier <code>--square</code> (Force square dimensions)</h2>
+      <div class="element">
+        <div class="element__icon">
+          <i class="custom-monochromatic-icon-wide custom-monochromatic-icon-wide--square"></i>
+        </div>
+      </div>
+      <div class="element">
+        <div class="element__icon">
+          <i class="custom-multicolor-icon-wide custom-multicolor-icon-wide--square"></i>
         </div>
       </div>
     </section>

@@ -3,6 +3,14 @@ import path from 'path';
 import { optimize } from 'svgo';
 import chalk from 'chalk';
 
+/*
+  npm install --save-dev chalk svgo
+*/
+
+/**
+ * To properly support Safari Browser, mask-size/background-size needs to be set to 'cover' instead of 'contain'.
+ */
+
 // Get the directory of the current module
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const printLog = (...args) => console.log(chalk.dim('[icons]::'), ...args);
@@ -32,6 +40,7 @@ const icons = (api) => {
   const cssVarNameIconSize = '--o-icon-size';
   const cssVarNameIconColor = '--o-icon-color';
   const cssVarNameIconUrl = '--o-icon-svg-url';
+  const cssVarNameIconHeight = '--o-icon-svg-height'; // for square icons
 
   function optimizeSVG(svgContent, idPrefix, colorfulIcons) {
     const configMono = [
@@ -230,6 +239,7 @@ const icons = (api) => {
 
         if (data.svgRectangle) {
           mixinContent += `
+  ${cssVarNameIconHeight}: ${data.svgHeight / data.svgWidth}em;
   width: math.div(${data.svgWidth}, ${data.svgHeight}) * 1em;`
         }
 
@@ -257,10 +267,6 @@ const icons = (api) => {
   line-height: 1em;
   font-size: var(${cssVarNameIconSize}, 1em);
 
-  &--inline {
-    display: inline-flex;
-  }
-
   &::before {
     content: '';
     display: block;
@@ -268,7 +274,7 @@ const icons = (api) => {
     height: 1em;
     width: 1em;
 
-    @if ($multicolor) {
+    @if $multicolor {
       background-image: var(${cssVarNameIconUrl});
       background-repeat: no-repeat;
       background-size: cover;
@@ -279,6 +285,18 @@ const icons = (api) => {
       mask-size: cover;
       mask-position: center;
       background-color: var(${cssVarNameIconColor}, currentcolor);
+    }
+  }
+
+  &--inline {
+    display: inline-flex;
+  }
+
+  /* Force square aspect ratio */
+  &--square {
+    &::before {
+      width: 1em !important;
+      height: var(${cssVarNameIconHeight}, 1em);
     }
   }
 }
@@ -323,10 +341,6 @@ ${scssIndividualIconsMixins}
   line-height: 1em;
   font-size: var(${cssVarNameIconSize}, 1em);
 
-  &--inline {
-    display: inline-flex;
-  }
-
   &::before {
     content: '';
     display: block;
@@ -348,6 +362,18 @@ ${scssIndividualIconsMixins}
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+  }
+
+  &--inline {
+    display: inline-flex;
+  }
+
+  /* Force square aspect ratio */
+  &--square {
+    &::before {
+      width: 1em !important;
+      height: var(${cssVarNameIconHeight}, 1em);
+    }
   }
 }
 
